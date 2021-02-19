@@ -11,28 +11,9 @@ app.get("/", (req, res) => {
 
 app.get("/getdoc", async (req, res) => {
   // Read the document.
-  const document = firestore.doc("posts/intro-to-firestore");
+  const document = firestore.doc("posts/to-firestore");
   const doc = await document.get();
   console.log("Read the document");
-  const db = fire.firestore();
-    db.settings({
-      timestampsInSnapshots: true
-    });
-    var wholeData = []
-	db.collection('rover').get()
-    .then(snapshot => {
-      snapshot.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
-        // console.log(doc.data().name + doc.data().age);
-        // console.log(doc.data());
-        wholeData.push(doc.data())
-      });
-      console.log(wholeData)
-      res.send(wholeData)
-    })
-    .catch(error => {
-      console.log('Error!', error);
-  })
   res.send(doc);
 });
 
