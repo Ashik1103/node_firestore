@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT ||5000;
 const { Firestore } = require("@google-cloud/firestore");
 
 const firestore = new Firestore();
@@ -14,6 +14,25 @@ app.get("/getdoc", async (req, res) => {
   const document = firestore.doc("posts/intro-to-firestore");
   const doc = await document.get();
   console.log("Read the document");
+  const db = fire.firestore();
+    db.settings({
+      timestampsInSnapshots: true
+    });
+    var wholeData = []
+	db.collection('rover').get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        // console.log(doc.data().name + doc.data().age);
+        // console.log(doc.data());
+        wholeData.push(doc.data())
+      });
+      console.log(wholeData)
+      res.send(wholeData)
+    })
+    .catch(error => {
+      console.log('Error!', error);
+  })
   res.send(doc);
 });
 
